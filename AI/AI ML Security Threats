@@ -116,3 +116,21 @@ It makes sense then that DL is possible through the leveraging of neural network
 5. **Big Data Infrastructure** - Cloud computing platforms enabled processing of massive datasets
 
 Suddenly, masses of information was available to learning algorithms, and so, with DL, started a new era of AI in which we would unlock more potential and capabilities. Today's applications like ChatGPT, computer vision systems, and autonomous vehicles all leverage deep learning's power to process and learn from vast amounts of data.
+
+Knowledge Check - Key Concepts
+
+**Question 1: What category of machine learning combines both labelled and unlabelled data?**
+Answer: Semi-supervised learning
+- Semi-supervised learning bridges the gap between supervised and unsupervised approaches by using a small amount of labeled data to guide learning on a larger pool of unlabeled data. This is particularly useful in cybersecurity scenarios where labeling large datasets is expensive or time-consuming.
+
+**Question 2: What is the first layer in a neural network that handles incoming raw data?**
+Answer: Input layer
+- The input layer is the entry point of a neural network. It receives raw data directly and passes it to the hidden layers for processing. The number of nodes in the input layer corresponds to the dimensionality of the input data (e.g., 16 nodes for a 4x4 image).
+
+**Question 3: Which learning method does not require human-labeled data and can extract features from raw, unstructured input?**
+Answer: Deep learning
+- Deep learning automatically extracts features from raw, unstructured data without requiring manual labeling or feature engineering. This self-learning capability, enabled by multiple hidden layers in neural networks, allows DL to process images, audio, text, and other complex data types at scale.
+
+**Question 4: What are the weighted connections between nodes in a neural network meant to simulate in the human brain?**
+Answer: Synapses
+- In biological neural networks, synapses are the connections between neurons that transmit electrical and chemical signals. In artificial neural networks, the weighted connections between nodes simulate this biological mechanism. The strength of these weights determines how much influence one neuron has on the next, just as synaptic strength affects neural communication in the brain.
