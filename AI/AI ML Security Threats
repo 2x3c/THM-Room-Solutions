@@ -134,3 +134,104 @@ Answer: Deep learning
 **Question 4: What are the weighted connections between nodes in a neural network meant to simulate in the human brain?**
 Answer: Synapses
 - In biological neural networks, synapses are the connections between neurons that transmit electrical and chemical signals. In artificial neural networks, the weighted connections between nodes simulate this biological mechanism. The strength of these weights determines how much influence one neuron has on the next, just as synaptic strength affects neural communication in the brain.
+
+Large Language Models (LLMs)
+
+We have taken a walk through history in this room—from our goal to have computers behave like humans, which birthed the AI field, to advancements in ML that brought us closer to that goal, and finally to neural networks and DL, which unlocked even more potential. In more recent years, the further development of these fields has enabled us to unlock revolutionary technology: Large Language Models (LLMs).
+
+**LLMs Exploding onto the Scene**
+
+ChatGPT emerged during "The AI Boom" and revolutionized public perception of AI. Its ability to generate human-like text in response to user queries captivated millions and sparked discussions across news, politics, education, and industry. Something fundamental had changed—we were entering a new technological era, and everyone recognized it.
+
+Today, LLMs like ChatGPT, LLaMA, and Deepseek are transforming how we work and communicate. Understanding how these technologies work requires knowledge of all the concepts we've covered: the deep learning architectures, neural networks, and massive datasets that power them.
+
+**What are LLMs, and how do they work?**
+
+Large Language Models (LLMs) are deep learning-based AI models that can process and generate text by predicting the next word in a sequence. Fundamentally, an LLM operates on a simple yet powerful principle: given some text, predict what word comes next.
+
+For example, consider the sentence: "The quick brown fox jumps over the lazy ___"
+
+An LLM would be tasked with predicting the final word. When you interact with a chatbot, this is precisely what happens in the background—predictions are made rapidly about what the next word in the response should be. But how?
+
+**Pre-training Phase**
+
+LLMs are first trained in a "pre-training" phase, where they process vast amounts of text. To understand the scale: GPT-3 was trained on data that would take a human 2,600 years to read nonstop. More advanced models like GPT-4 require even greater datasets, made possible only by deep learning's scalability.
+
+Instead of relying on manually labeled data, LLMs use billions of parameters—think of these as puzzle pieces that, when combined, enable the model to understand and generate human-like language. These parameters are fine-tuned automatically as the model processes text, adjusting based on prediction accuracy.
+
+**The Learning Process**
+
+During training, the LLM is given a sentence with the last word removed, and it must guess what that word should be. Here's the process:
+
+1. **Initial Prediction** - The model begins by generating a random word to complete the sentence
+2. **Comparison** - The prediction is compared against the actual correct word
+3. **Error Calculation** - The difference between prediction and reality is calculated
+4. **Parameter Adjustment** - Using an algorithm called **backpropagation**, parameters are fine-tuned to make correct words more likely and incorrect words less likely
+5. **Iteration** - This process repeats trillions of times until the model can accurately predict not just the training data, but also completely new, unseen data
+
+The sheer scale of this process—trillions of iterations—is only possible due to:
+
+- **Hardware Advancements** - Graphics Processing Units (GPUs) and Tensor Processing Units (TPUs) enable massive parallel operations and efficient processing of large datasets
+- **Neural Network Architecture** - Specifically, a breakthrough technology called **transformer neural networks**
+
+**Transformer Neural Networks**
+
+Introduced in Google's 2017 paper "Attention is All You Need," transformer neural networks revolutionized LLMs by enabling parallel text processing instead of sequential word-by-word analysis. This breakthrough allowed models to understand context across entire sentences simultaneously.
+
+Key features of transformers:
+
+- **Parallel Processing** - Can process multiple words at once, not sequentially
+- **Attention Mechanism** - Assigns "attention" weights to key words, improving contextual understanding
+- **Word Encoding** - Words are encoded into numerical values for mathematical processing
+- **Attention Scoring** - The model calculates attention scores between words to understand relationships
+
+This helps models correctly interpret ambiguous references. For example, in the sentence: "The bank approved the loan because it was financially stable," the model must determine whether "it" refers to "the bank" or "the loan." The transformer's attention mechanism enables this contextual understanding by analyzing relationships between all words in the sentence.
+
+**Reinforcement Learning from Human Feedback (RLHF)**
+
+After pre-training, humans re-enter the process in a step called **RLHF (Reinforcement Learning from Human Feedback)**. During this phase:
+
+1. Model predictions are reviewed by human evaluators
+2. Responses that would be considered unhelpful, harmful, or incorrect are identified
+3. Parameters are adjusted based on this feedback
+4. The model learns to avoid producing undesirable outputs
+
+This human-in-the-loop approach ensures that the trained model produces helpful, safe, and accurate responses.
+
+**Deployment and Use**
+
+Once trained and reinforced, the LLM can be deployed as a chatbot, translator, code generator, or for numerous other applications. When a user provides a query:
+
+1. The input is processed by the trained model
+2. The model predicts what the next word should be
+3. This word is output, and the process repeats
+4. The cycle continues until a complete response is generated
+
+**Generative AI and Beyond**
+
+LLMs power generative AI products like ChatGPT and LLaMA, which create original text-based content in response to user prompts. Generative AI extends beyond text to enable creation of images, music, video, and more. This broader generative AI ecosystem continues to expand rapidly.
+
+**The Connection: AI, ML, DL, and LLMs**
+
+The recent AI boom is the result of decades of research and innovation, not an overnight development. Let's recap how all these concepts connect:
+
+- **Artificial Intelligence (AI)** - The overarching field encompassing all systems that mimic human intelligence
+- **Machine Learning (ML)** - A subfield of AI enabling systems to learn patterns from data without explicit programming
+- **Deep Learning (DL)** - A specialized branch of ML using neural networks to process vast amounts of complex data without human interaction; effectively "scalable ML"
+- **Large Language Models (LLMs)** - Advanced DL models built on transformer neural networks, designed to understand and generate human-like text
+
+Knowledge is power, and with this understanding of AI/ML fundamentals and LLMs, you have begun your journey in pursuit of that knowledge and now have a solid grasp of the technologies giving AI its remarkable powers.
+
+**LLM Knowledge Check**
+
+**Question 1: What type of AI model enabled major advancements in ChatGPT and similar tools?**
+Answer: Large Language Models
+- LLMs are deep learning-based models that revolutionized generative AI by predicting and generating text sequentially. Their ability to process and understand context from massive datasets made advanced applications like ChatGPT possible.
+
+**Question 2: What is the first training stage where an LLM processes massive amounts of data?**
+Answer: Pre-training
+- Pre-training is the initial stage where LLMs learn language patterns by processing billions of tokens of text data. This stage requires enormous computational resources and is where the model develops its fundamental understanding of language.
+
+**Question 3: What type of neural network introduced by Google in 2017 powers modern LLMs?**
+Answer: Transformer neural networks
+- Transformer networks, introduced in the paper "Attention is All You Need," revolutionized LLMs by enabling parallel text processing and the attention mechanism. This allows models to understand context and relationships between words across entire sentences simultaneously, rather than processing sequentially.
