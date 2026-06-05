@@ -697,17 +697,15 @@ Build a library of templates for common security tasks:
 **Answer:** **"Let's think step by step"**
 
 ---
+flag THM{Pr0mpt_3ng1neer}
 
-## Progress Checklist
+Conclusion 
+At the start of the room, we set out to equip you with the foundational skills needed to use LLMs effectively before diving into their security implications. You've learned how to structure prompts, understand the instruction hierarchy, and control model behaviour through parameters. Here's a recap of what has been covered:
 
-- [x] Understanding Tokens
-- [x] LLM Text Processing & Tokenisation
-- [x] Determinism vs Nondeterminism
-- [x] Temperature Control
-- [x] Max Tokens Parameter
-- [x] Top-p (Nucleus Sampling)
-- [x] Context Window
-- [x] Four Pillars of Effective Prompt Engineering
-- [x] System Prompts vs User Prompts
-- [x] Key Prompting Techniques
-- [ ] Security Applications & Defensive Prompting
+Effective prompts follow four pillars: clear instructions, relevant context, specified output format, and defined constraints, transforming vague requests into precise directives.
+System prompts set persistent rules and behaviour, while user prompts provide task-specific queries. However, LLMs process both as a single text stream, creating probabilistic security boundaries rather than guaranteed ones.
+Tokens are the fundamental units LLMs process (roughly 3-4 characters each), with models converting text into numerical token IDs that they use to predict what comes next.
+LLMs are nondeterministic by nature, meaning identical inputs can produce different outputs due to both intentional randomness controls (like temperature) and underlying computational variations.
+Parameters like temperature, max tokens, and top-p allow you to control model behaviour, balancing between precision and creative variety depending on your task.
+Passed your Prompt Engineering Test
+
