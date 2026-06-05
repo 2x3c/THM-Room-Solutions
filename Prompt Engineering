@@ -25,6 +25,217 @@ You are expected to know the fundamentals of AI/ML at least as covered in the **
 
 ---
 
-## Notes Section
+## Understanding Tokens
 
-*Add detailed notes from each section here as you progress through the room.*
+### What Are Tokens?
+
+LLM models don't read text the way you do. When you type "Hello, how are you?" the model breaks it into **tokens**, the smallest units it can understand. Think of tokens as the "words" that AI actually sees, though they don't match our definition of words.
+
+**Key Facts:**
+- A token is roughly equivalent to **3-4 characters**
+- Most English words are **1-2 tokens**
+- Common short words like "the" or "cat" become **single tokens**
+- Longer or uncommon words are split into pieces:
+  - "ChatGPT" → "Chat" + "GPT"
+  - "butterfly" → "butter" + "fly"
+
+### How LLMs Process Tokens
+
+1. The model converts each token into a **unique number (an ID)**
+2. Example: "Hello, how are you?" → `[15496, 11, 703, 527, 499]`
+3. The model **only works with these numbers**, using them to predict what number (token) should come next
+
+### Tokenisation Methods
+
+Different models use different tokenisation methods, producing different token sequences for the same sentence:
+
+- **GPT** - Uses Byte-Pair Encoding (BPE)
+- **BERT** - Uses WordPiece
+
+**Important:** The same sentence produces different token sequences depending on which model you're using.
+
+---
+
+## Determinism vs Nondeterminism
+
+### What is Nondeterminism?
+
+Ask an LLM the same question twice and you'll likely get **different answers**. This is **nondeterminism**: outputs vary even with identical inputs.
+
+### Key Differences
+
+**Traditional Software (Deterministic):**
+- Same input → Always produces same output
+- 100% predictable behavior
+
+**LLMs (Nondeterministic):**
+- Same input → Can produce different outputs
+- Introduces randomness when predicting the next token
+- Parameters like temperature can reduce randomness, but no setting eliminates it entirely
+- Even major providers acknowledge this limitation
+
+### Security Implications 🔒
+
+This has **massive security implications** for AI security:
+
+- **Code** (like malware) will execute the same way every time
+- **Defences** may work on a malicious prompt one time and fail another
+- This key characteristic of LLMs poses a **massive challenge to the security community and industry**
+- Nondeterminism makes LLMs inherently unpredictable and harder to secure
+
+---
+
+## Controlling the Chaos: LLM Parameters
+
+When you send a prompt to an LLM, you're not just typing words into a black box; you're triggering a **probability machine** that weighs hundreds of thousands of potential next words. The model doesn't "know" what to say; it calculates which tokens are statistically likely based on patterns from training.
+
+**You can control how that probability plays out** using these parameters:
+
+1. **Temperature**
+2. **Max tokens**
+3. **Top-p**
+
+### Parameter 1: Temperature - The Randomness Dial
+
+**Definition:** A numerical value (commonly ranging from 0.0 - 2.0, can differ between providers) that controls how "adventurous" the model is when picking its next word.
+
+#### Temperature Ranges and Behavior
+
+| Temperature Range | Behavior | Use Case |
+|-------------------|----------|----------|
+| 0.0 – 0.3 | Always picks the most probable token; closest to determinism | Code generation, data extraction, factual Q&A |
+| 0.7 – 1.0 | Samples from a wider distribution; more variety and creativity | Brainstorming, storytelling, marketing copy |
+| 1.2 – 1.5 | Coherence begins to break down; unpredictable outputs | Experimental use only |
+| 1.5+ | Low-probability tokens dominate; outputs can feel "drunk" | Avoid for most tasks |
+
+**Key Insight:** Temperature **0.0** makes LLMs behave **closest to deterministic** by always picking the most probable token.
+
+### Parameter 2: Max Tokens - The Length Limiter
+
+**Definition:** Caps how long the response can be.
+
+#### Token-to-Word Conversion
+
+- **1 token ≈ 0.75 English words**
+- 100 tokens ≈ 75 words
+- Set too low → model cuts off mid-sentence
+- Set too high → you pay for rambling you don't need
+
+#### Common Token Budgets
+
+| Use Case | Token Count |
+|----------|-------------|
+| Quick answers or tight summaries | 50 - 150 tokens |
+| Detailed explanations | 500 - 1,000 tokens |
+| Full articles or reports | 2,000+ tokens |
+
+#### Important Notes
+
+- **Max tokens is a ceiling, not a target** — the model doesn't guarantee it will use all tokens
+- **Cost Control:** Consumer models like OpenAI charge per token, so controlling length is a cost-control measure
+
+### Parameter 3: Top-P - The Alternative Randomness Dial
+
+**Definition:** Top-p (nucleus sampling) controls randomness by setting a shortlist of likely tokens instead of adjusting across all possibilities.
+
+#### How Top-P Works
+
+- Set top-p to **0.9** → model only considers words that together account for **90% of likely options**
+- Higher top-p value → bigger shortlist (more choices)
+- Lower top-p value → more restricted choices
+- The weird, unlikely tail gets cut off entirely
+
+#### Temperature vs Top-P: Which to Use?
+
+**Best Practice:** Adjust **temperature OR top-p, but NOT both**
+
+**Why?** Using both simultaneously creates unpredictable interactions because you're stacking two randomness controls.
+
+| Aspect | Temperature | Top-P |
+|--------|-------------|-------|
+| Ease of use | Simpler, more intuitive | More complex |
+| Understanding | Widely understood | Less common |
+| Best for | Most tasks | When model needs to adapt creativity based on context |
+| Recommendation | Use for most tasks | Use selectively |
+
+---
+
+## Context Window: The Memory Limit
+
+**Definition:** Every model has a context window—its maximum "working memory" measured in tokens.
+
+### Context Window Sizes by Model
+
+| Model | Context Window | Capacity |
+|-------|-----------------|----------|
+| GPT-3.5 (older) | 8k tokens | ~6,000 words |
+| Claude 3.5 Sonnet | 200k tokens | ~150,000 words or 500 pages |
+| Gemini 1.5 Pro | 1M+ tokens | Massive capacity |
+
+### What Happens at the Limit
+
+- Exceed the context window → model **silently truncates earlier context**
+- **It literally forgets the start of your conversation**
+- This is why long conversations may lose context from earlier messages
+
+---
+
+## Practical Experiment: See It Live
+
+Try this experiment to understand parameters in action:
+
+### Experiment 1: Temperature Effect
+**Prompt:** "Explain SQL injection"
+- **Temperature 0.0** → Textbook definition (deterministic)
+- **Temperature 1.0** → Creative tangents, maybe fictional anecdotes
+
+### Experiment 2: Max Tokens Effect
+**Same Prompt:** "Explain SQL injection"
+- **Max Tokens: 50** → Tweet-length explanation
+- **Max Tokens: 500** → Essay-length explanation
+
+### Key Takeaway
+
+**These parameters don't change what the model knows; they change how it expresses that knowledge.** Master them and you become a graduate prompt engineer.
+
+---
+
+## Review Questions & Answers
+
+### Question 1: What is the term for the smallest units that an LLM breaks text into in order to process it?
+
+**Answer:** **Tokens**
+
+---
+
+### Question 2: What parameter would you set to 0.0 to make an LLM behave as close to deterministic as possible?
+
+**Answer:** **Temperature**
+
+---
+
+### Question 3: What parameter restricts which tokens the model considers by limiting selection to a cumulative probability mass?
+
+**Answer:** **Top-p** (nucleus sampling)
+
+---
+
+### Question 4: What term describes the maximum working memory of an LLM, measured in tokens?
+
+**Answer:** **Context window**
+
+---
+
+## Progress Checklist
+
+- [x] Understanding Tokens
+- [x] LLM Text Processing & Tokenisation
+- [x] Determinism vs Nondeterminism
+- [x] Temperature Control
+- [x] Max Tokens Parameter
+- [x] Top-p (Nucleus Sampling)
+- [x] Context Window
+- [ ] Four Pillars of Effective Prompt Engineering
+- [ ] System Prompts vs User Prompts
+- [ ] Key Prompting Techniques
+- [ ] Security Applications
