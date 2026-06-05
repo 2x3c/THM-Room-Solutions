@@ -1,1 +1,30 @@
+# Prompt Engineering - Room Notes
 
+## Introduction
+
+With the basics of AI/ML under your belt, it's now time to take a closer look at Large Language Models (LLMs) and how to use them. While this path discusses AI systems as a whole, LLMs are at the core of the path, so we need to make sure you have your driver's license before we send you off to the races. More and more people are using LLMs in their daily lives, but few take the time to learn how to effectively pilot this new tool at their disposal. This room will cover some LLM fundamentals before showing you how to effectively use an LLM, whether that's for security-related tasks or testing a model's behaviour against malicious prompts. 
+
+**Ready to become a Prompt Engineer?**
+
+---
+
+## Prompt Pilot
+
+### Learning Objectives
+
+- Understand what tokens are and how LLMs process text
+- Grasp nondeterminism and why LLMs produce variable outputs
+- Control model behaviour using temperature, max tokens, and top-p
+- Understand the four pillars of effective prompt engineering
+- Recognise the difference between system and user prompts
+- Understand key prompting techniques
+
+### Prerequisites
+
+You are expected to know the fundamentals of AI/ML at least as covered in the **AI/ML Security Threats** room.
+
+---
+
+## Notes Section
+
+*Add detailed notes from each section here as you progress through the room.*
