@@ -1,9 +1,6 @@
 Artificial intelligence isn't something organisations are still waiting on; it's already embedded in enterprise operations. Language models handle customer support tickets. Recommendation engines surface products to millions of users. Fraud detection systems make real-time decisions that affect people's lives.
-
 Behind every one of these deployments is an attack surface that most security teams have never been trained to assess.
-
 Traditional threat modelling provides a strong foundation, and frameworks like STRIDE have helped defenders systematically identify security threats for over two decades. But AI systems introduce assets, behaviours, and failure modes that those frameworks weren't designed to handle. Training data can be poisoned. Model weights can be stolen. Prompts can be injected. And the outputs? They're non-deterministic, meaning the same system can behave differently each time it's queried.
-
 If your organisation is deploying AI (and chances are it is), your threat models need to evolve.
 
 Learning Objectives
@@ -34,4 +31,39 @@ No answer needed
 Correct Answer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+If you have threat modelled traditional applications before, you are used to thinking about a familiar set of assets: databases, source code, configuration files, API keys, and user credentials. You know what they are, where they live, and how to protect them.
+
+AI systems change the picture. They introduce an entirely new class of assets that most security teams have never had to inventory, classify, or defend. Missing these assets during a threat assessment means missing entire categories of risk, and that's exactly the gap attackers exploit.
+
+Let's map out what's new.
+
+AI Asset Map
+
+AI Assets You Need to Know
+Asset	What It Is	Why It Matters
+Training Data	The datasets used to teach the model its behaviour	Poisoning this data corrupts the model's outputs at the source. Unlike a database compromise, the damage is baked into the model itself.
+Model Weights / Parameters	The numerical values that define what the model has learned	These are the model. Stealing them means an attacker has a functional copy of your AI, months of compute and potentially millions in investment, gone.
+Embedding Vectors	Numerical representations of text or data used for similarity computation, retrieval, or as input features to downstream models	Used in RAG pipelines, recommendation engines, and fraud detection systems. Poisoning or manipulating embeddings alters what information models see at query time.
+System Prompts	Instructions that define the model's behaviour, constraints, and persona	Leaking these reveals your security controls, business logic, and guardrails, giving attackers a roadmap to bypass them.
+Feature Stores	Preprocessed data repositories that feed real-time model inputs	Tampering with features changes what the model "sees" at inference time, without touching the model itself.
+Model Registry / Artifacts	Stored versions of trained models ready for deployment	A compromised registry means an attacker can swap a legitimate model for a backdoored one, and no one may notice until it's too late.
+None of these assets map neatly onto traditional asset categories. A stolen database is serious, but a stolen model is a fundamentally different kind of loss, you can't just rotate a credential and move on. The asset that defines the model's learned behaviour is its model weights; once those are exfiltrated, the attacker has a functional copy of your AI. Meanwhile, if an attacker wants to give themselves a roadmap of your LLM's security controls and behavioural constraints, the asset they would target is your system prompts. And a poisoned training data set doesn't trigger the same alerts as a modified database record, because the corruption only surfaces after the model has been retrained and redeployed.
+
+What Else Makes AI Systems Different
+Beyond new asset types, AI systems also behave differently from traditional software, affecting how we model threats. Two characteristics worth noting:
+
+Non-deterministic behaviour: AI models, especially LLMs, can produce different outputs for the same input. This makes testing, auditing, and incident reproduction significantly harder than with deterministic software. If you've completed earlier rooms in this path, you'll already be familiar with this concept.
+The black box problem: Most AI models, particularly deep neural networks, lack the explainability of traditional application logic. You can't step through a model's reasoning the way you'd trace a code path. This forces defenders to think in terms of input-output behaviour and failure modes rather than code-level inspection.
+Both of these characteristics have direct implications for threat modelling, and we will see them repeatedly surface as we work through the frameworks in upcoming tasks. For now, the key takeaway is simple: AI systems aren't just traditional applications with a model bolted on. They have different assets, behaviours, and ways of failing, and our threat models need to account for all of it.
+
+Answer the questions below
+In a RAG-based system, which AI asset type is used to retrieve relevant context at query time?
+Embedding Vectors
+
+An attacker gains access to MegaCorp's model registry and swaps the production model for a modified version. Which AI-specific asset has been compromised? 
+Model Registry / Artifacts
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
