@@ -1,0 +1,107 @@
+At its core, Detection Engineering is the systematic process of designing, building, testing, and maintaining the detections that power a SOC. It sits at the intersection of threat intelligence, data engineering, and security analysis, translating knowledge of attacker behavior into actionable signals.
+Tool                               Examples                                                  	Purpose
+SIEM                          	Splunk, Microsoft Sentinel, Elastic                       	Write and deploy detection rules against ingested log data.
+EDR            	                CrowdStrike, SentinelOne, Microsoft Defender               	Write and deploy detection rules against host-level telemetry.
+Threat Intelligence Sources    	MISP, OpenCTI, The DFIR Report                            	Research attacker TTPs and map them to detection opportunities.
+Automation                    	Python scripts, SOAR platforms	                            Automate detection testing, alert enrichment, and deployment pipelines.
+Version Control               	Git, GitHub	                                                Track changes to detection logic and manage review workflows.
+Lab / Testing Environments	    Atomic Red Team, custom VMs, BAS solutions                	Simulate attacker techniques to validate detections before deployment.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pillar                                                                                                      	Description
+Detection Creation	                                                          Research a threat technique, translate it into detection logic, and deploy it to the SIEM or EDR.
+Detection Tuning                                                             	Refine detection logic to reduce false positives without creating blind spots.
+Detection Management	                                                        Track, document, version, and deprecate detections to keep the detection library healthy over time.
+
+Beyond these three pillars, Detection Engineering teams often also take on automation, threat intelligence, and threat hunting. The exact scope varies widely because there is currently no industry-wide standardization of what a Detection Engineering team owns.
+
+THM{PR0ACT1V3_D3T3CT10N_3NG1N33R}
+THM{V3RS10N_C0NTR0L_1S_K3Y}
+
+Detection Life Cycle Frameworks :- 
+Some great detection engineers developed frameworks to bring structure to Detection Engineering and help the community. You don't need to memorize them, but you should know they exist to use as a reference to enhance your own pipeline.
+
+CREDO(opens in new tab) (Creation, Review, Evaluation, Deployment, and Operations): Breaks the detection life cycle into five explicit phases, emphasizing that detection work doesn't end at deployment. It pushes teams to treat ongoing evaluation and operations as first-class activities rather than afterthoughts.
+ADS(opens in new tab) (Alerting and Detection Strategy): Gives detection engineers a consistent template to follow every time they build a detection. It covers the detection goal, the ATT&CK technique it targets, the data sources it relies on, and the expected false positives — ensuring every rule is built and documented consistently so anyone on the team can understand, reproduce, and maintain it.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The Detection Engineering Life Cycle
+Detection backlog management
+Threat Research
+Data Review
+Detection and Design 
+Testing and Validation
+Deployment 
+Maintainance
+
+THM{D4T4_R3V13W_B3F0R3_D3S1GN}
+THM{P33R_R3V13W_B3F0R3_D3PL0Y}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Detection Gap
+There's an uncomfortable truth at the heart of detection engineering: you are always playing catch-up. Attackers move first. They research, develop, and deploy a technique, and only after it's observed in the wild does the defender community begin building detections and documenting it. By the time a detection is mature and widely deployed, a motivated attacker has often already moved on to a variation or an entirely different approach. This dynamic is visualized as the detection gap:
+The gap between the evasion capability curve and the defender's detection curve never fully closes. A Detection Engineer's job is not to eliminate that gap; it's to keep it as narrow as possible. This leads to a classic question: Since defenders are always one step behind, will attackers win every time?
+
+Detecting Everything
+No, you will not detect everything, and you don't need to. If we revisit the concept of an attack chain, an attacker does not perform a single isolated technique; they execute a subset of techniques.
+
+This means an attacker will use multiple known techniques in their attack chain. That's the opportunity the detection engineer has: attackers need to succeed at every step of a kill chain, while defenders only need to catch one to start investigating and acting. So, even detecting a minority of techniques can be sufficient to disrupt an attack.
+
+Diagram showing the relationship between implemented detections, triggered detections, and threat group TTPs, illustrating that full coverage is not required to disrupt an attack chain.
+
+Note in the diagram above that even known techniques can be bypassed by an attacker (Masquerading). This may happen due to different ways of implementing a technique, or because the DE team's strategy did not prioritize that specific detection (Step 0 in the life cycle).
+
+Stealth is the attacker's primary goal, and regardless of your role in a SOC, you should know that. Every choice they make, from how they execute code to how they move laterally, is optimized to avoid generating alerts. They study the same detection logic that defenders publish. They test their tools against commercial EDRs. They know which event IDs are forwarded to SIEMs and which ones aren't. They deliberately operate in the margins of what looks normal.
+
+Durable detections are built on what an attacker must do, the actions that are so fundamental to a technique that they can't be easily avoided without abandoning the technique entirely. This is the core insight behind the Pyramid of Pain. The higher up the pyramid you anchor your detections, from hash values and IP addresses at the base, up through tools and behaviors at the top, the more it costs the adversary to evade you. Detections built on TTPs are harder to break when an attacker rotates infrastructure or recompiles a binary. They break the attacker's operation. We will explore how to create and research durable detections in the Detection Rules Development room (coming soon).
+
+Precision and Recall
+Writing a detection that fires is easy. Writing one that fires correctly, reliably catching real threats without burying analysts in noise. When creating detections, you should always prioritize their performance, which can be challenging.
+
+To reason about that challenge, detection engineers borrow two concepts from statistics: precision and recall.
+
+Precision: of all the alerts this detection fires, how many are actual threats? Low precision means analysts are drowning in false positives.
+Recall: of all the real attacks that occurred, how many did this detection catch? Low recall means threats are slipping through silently with no alert.
+The missed ones, called false negatives, are the most dangerous outcome, because they produce no alert at all. No noise, no complaint, just a silent gap an attacker can walk through.
+
+Diagram explaining the different scenarios that consist of both balanced and precision metric values for a detection rule.
+Keeping this tension consciously in mind, and measuring it over time through real SOC outcomes, not just gut feel, is what separates engineers who build detections that hold up from those who just ship queries and move on.
+
+"The better you research and test a detection, the better your precision and recall values."
+
+THM{PR3C1S10N_PR0BL3M_D3T3CT3D}
+THM{B3HAV10UR_0V3R_10CS}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Detction Engineering is a discipline that looks clean on a diagram and gets complicated fast in practice. Most challenges aren't about writing detection logic; they're about everything surrounding it.
+he Main Detection Challenges
+Challenge	Description	Life Cycle Related Phase
+Missing log sources	The log source that a detection depends on may not be collected or forwarded to the SIEM at all, causing the rules to never fire silently.	Step 2: Data Review
+Parsing problems	Even when data arrives, incorrect field names, malformed timestamps, or split events can silently break detection logic.	Step 3: Detection Design
+Data volume decisions	Not every log should be ingested. High-volume, low-signal sources inflate costs and slow queries, forcing constant trade-offs on what to keep.	Step 2: Data Review
+No testing environment	Without a realistic lab, detections reach production unvalidated, turning every deployment into a live experiment.	Step 4: Testing & Validation
+Detection library decay	Rules written for old environments, deprecated tools, or patched vulnerabilities keep running and generating noise that nobody investigates.	Step 6: Maintenance
+Alert fatigue	Too many low-quality alerts train analysts to dismiss everything, including real threats buried in the noise.	Step 4: Testing & Validation
+TTP drift	Attacker techniques evolve. A detection accurate last quarter may be blind to this quarter's variant without continuous updates.	Step 1: Threat Research
+Adjacent responsibilities	Documentation, metrics, and automation pull Detection Engineers away from core detection work, competing for the same limited time.	All steps
+These challenges are real, but they are not unique to your team; every Detection Engineering practitioner faces them. The difference lies in how much investment the team has to address them. A single analyst absorbing DE responsibilities alongside SOC work will feel all of these simultaneously. A mature team with dedicated roles, tooling, and processes will face the same challenges but with the resources to systematically tackle them one by one.
+
+Two examples of how this plays out in practice:
+
+Tackling missing log sources starts with building a data inventory, which is a living document mapping every detection to its required log source and flagging gaps. Teams that invest in this early avoid the painful discovery of a broken detection after an incident. As the team matures, this process becomes automated: pipelines validate the availability of the log source before a detection is even deployed.
+Managing detection library decay starts with ownership. Assigning each detection a clear owner and a review date prevents orphaned rules. Mature teams go further, tracking detection performance metrics over time and automatically flagging rules that haven't fired in months or are generating disproportionate noise, making retirement decisions data-driven rather than guesswork.
+The more the team grows and matures, the more these challenges shift from fires to managed processes.
+
+THM{D3_G03S_B3Y0ND_RUL3S}
+THM{D3T3CT10N_L1BR4RY_D3GR4D3S}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Detection Engineering is the discipline that sits behind every alert your SOC depends on. Throughout this room, you explored what Detection Engineering is and where it lives in a security organization, how the detection life cycle structures the work from threat research all the way through to maintenance, the mindset required to build detections that hold up against real attackers, and the practical challenges every DE team faces regardless of size or maturity.
+Before moving on, make sure you are comfortable with the following:
+
+The proactive mindset: Detection Engineers work ahead of threats, not in response to them. Every detection is built on research, tested before deployment, and maintained over time, not written once and forgotten.
+Precision and recall: A detection that fires on everything is as dangerous as one that fires on nothing. Understanding this trade-off is fundamental to building detections that add value rather than noise.
+The life cycle never truly ends: Deployment is not the finish line. Attacker techniques evolve, environments change, and detections degrade. Maintenance is as important as creation.
