@@ -1,0 +1,92 @@
+The Detection and Analysis phase is where the incident response process begins. An alert has been raised at Nexus Financial. Your job is to confirm whether a security incident has occurred, understand how the attacker got in, and determine the full extent of the damage. Every decision that you make in the upcoming rooms depends on how thoroughly this phase is completed.
+
+Detection
+Detection is the process of confirming that a security incident has actually occurred. It begins the moment a potential threat is noticed, whether through a SIEM alert, a user report, or an automated detection. Not every alert represents a real incident. The first step is always determining whether the alert is a true positive or a false positive.
+
+	SOC L1 Analyst	                                                                                                                                                 SOC L2 Analyst
+Role in Detection	                                                    Initial alert triage	Deep investigation and validation
+What they do                                                        	Receives alert, does initial validations like checking IPs against threat intel, contacting users, etc., and determines true or false positive	Validates                                                                       L1 finding, traces the attack chain, identifies the root cause, and the entry point
+Output                                                              	Escalation ticket with initial findings	Full incident picture with confirmed IOCs
+
+
+Analysis
+Once an incident is confirmed, the analysis begins. Analysis is the process of understanding the full picture of what happened. This goes beyond simply confirming the incident exists. It means answering deeper questions about the attack:
+
+How did the attacker gain initial access?
+Which accounts and systems were affected?
+What data may have been accessed or exfiltrated?
+What actions did the attacker take after gaining access?
+
+The Feedback Loop
+Detection and analysis feed into each other continuously. A new IOC uncovered during analysis may reveal an additional compromised account. That account may lead to further detection of attacker activity that was previously unknown. This cycle continues until no new evidence is emerging and the full picture is confirmed with confidence.
+
+Answer the questions below
+
+What term describes the process of confirming a security incident has actually occurred?
+Detection
+
+What term describes the process of understanding the full extent of an incident, including affected accounts, systems, and data?
+Analysis
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+An incident response process does not start on its own. Something must trigger it. Understanding the different sources that can initiate an IR process is important because relying on a single trigger source, such as automated SIEM alerts, creates blind spots. Incidents that do not generate an automated alert will go undetected unless other trigger sources are active.
+
+Common IR Triggers
+Trigger Source	                                                                                Example
+SOC alert escalation	                                   SIEM flags an anomalous sign-in, L1 analyst confirms a true positive, and escalates to L2
+User report	                                             Employee reports receiving a suspicious email or notices unexpected account activity
+Automated detection	                                     EDR detects and blocks malicious process execution on an endpoint
+Third-party notification     	                           A threat intelligence provider or law enforcement notifies the organization of a compromise
+Threat intelligence feed                        	       IOC matching the organization's infrastructure appears in an external feed
+
+
+What type of IR trigger would a threat intelligence provider notifying an organization of a compromise be classified as?
+Third-party notification
+
+What system should be used to log every action, finding, and decision made during an IR investigation?
+Ticketing System
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The Asset Inventory
+The asset inventory is a reference document that lists all systems, devices, and platforms within the organization. During analysis, the IR team uses it to answer questions like: which systems did this account have access to? Who owns this IP address? What other accounts are associated with this workstation?
+
+Without an accurate asset inventory, analysis becomes difficult. The team may miss affected systems simply because they did not know they existed. This is why maintaining an up-to-date asset inventory is a core preparation requirement, a gap that Nexus Financial's own inventory acknowledges, noting that mobile devices are not currently tracked.
+
+The IOC Tracker
+The IOC Tracker is a running record of every indicator of compromise discovered during the investigation. It starts with whatever triggered the incident and grows with every new finding. Each entry records the IOC type, its value, where it was found, and any relevant notes.
+
+What does IOC stand for?
+Indicator of Compromise
+
+What IR tool provides a running record of every malicious indicator discovered during an investigation?
+IOC Tracker
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+That is all you have been given. The rest is yours to find.
+
+Available Log Sources
+Nexus Financial's Microsoft 365 logs have been ingested into Splunk under the index ir. The following log sources are available across all practical tasks in this module:
+
+Log Source	Sourcetype	Key Fields
+Entra ID Sign-in Logs	azure:aad:signin	userPrincipalName, ipAddress, location.city, location.countryOrRegion, appDisplayName, status.errorCode
+Message Trace	o365:reporting:messagetrace	Received, SenderAddress, RecipientAddress, Subject, Status, FromIP
+Unified Audit Logs	o365:management:activity	Operation, UserId, Workload, ClientIP, ObjectId, SourceFileName, Name, SubjectContainsWords, DeleteMessage
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+index=ir sourcetype=azure:aad:signin userPrincipalName="l.chen@nexusfinancial.thm"
+| table _time userPrincipalName ipAddress location.city location.countryOrRegion appDisplayName status.errorCode
+
+index=ir sourcetype=azure:aad:signin userPrincipalName="l.chen@nexusfinancial.thm"
+NOT ipAddress="197.32.45.112"
+status.errorCode=0
+| sort _time
+| table _time ipAddress location.city location.countryOrRegion
+
+index=ir sourcetype=o365:reporting:messagetrace RecipientAddress="l.chen@nexusfinancial.thm"
+| table Received SenderAddress Subject FromIP Status
+| sort Received
+
+index=ir sourcetype=o365:reporting:messagetrace RecipientAddress="l.chen@nexusfinancial.thm"
+| table SenderAddress Subject Received
