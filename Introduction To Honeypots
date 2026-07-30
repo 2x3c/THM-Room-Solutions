@@ -1,70 +1,5 @@
-﻿What are honeypots?
-A honeypot is a deliberately vulnerable security tool designed to attract attackers and record the actions of adversaries. Honeypots can be used in a defensive role to alert administrators of potential breaches and to distract attackers away from real infrastructure. Honeypots are also used to collect data on the tools and techniques of adversaries and assist with generating effective defensive measures.
-
-﻿Honeypot Interactivity and Classification
-
-Low-Interaction honeypots offer little interactivity to the adversary and are only capable of simulating the functions that are required to simulate a service and capture attacks against it. Adversaries are not able to perform any post-exploitation activity against these honeypots as they are unable to fully exploit the simulated service. Examples of low-interaction honeypots include mailoney(opens in new tab) and dionaea(opens in new tab).
-
-Medium-Interaction honeypots collect data by emulating both vulnerable services as well as the underlying OS, shell, and file systems. This allows adversaries to complete initial exploits and carry out post-exploitation activity. Note, that unlike, High-Interaction honeypots (see below), the system presented to adversaries is a simulation. As a result, it is usually not possible for adversaries to complete their full range of post-exploitation activity as the simulation will be unable to function completely or accurately. We will be taking a look at the medium-interaction SSH honeypot, Cowrie(opens in new tab) in this demo.
-
-High-Interaction honeypots are fully complete systems that are usually Virtual Machines that include deliberate vulnerabilities. Adversaries should be able (but not necessarily allowed) to perform any action against the honeypot as it is a complete system. It is important that high-interaction honeypots are carefully managed, otherwise, there is a risk that an adversary could use the honeypot as a foothold to attack other resources. Cowrie can also operate as an SSH proxy and management system for high-interaction honeypots.
-
-
-Deployment Location
-Once deployed, honeypots can then be further categorized by the exact location of their deployment:
-
-Internal honeypots are deployed inside a LAN. This type can act as a way to monitor a network for threats originating from the inside, for example, attacks originating from trusted personnel or attacks that by-parse firewalls like phishing attacks. Ideally, these honeypots should never be compromised as this would indicate a significant breach.
-
-External honeypots are deployed on the open internet and are used to monitor attacks from outside of the LAN. These honeypots are able to collect much more data on attacks since they are effectively guaranteed to be under attack at all times.
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-﻿The Cowrie SSH Honeypot
-
-The Cowrie honeypot can work both as an SSH proxy or as a simulated shell. The demo machine is running the simulated shell. You can log in using the following credentials:
-
-IP - MACHINE_IP
-User - root
-Password - <ANY>
-As you can see the emulated shell is pretty convincing and could catch an unprepared adversary off guard. Most of the commands work like how you'd expect, and the contents of the file system match what would be present on an empty Ubuntu 18.04 installation. However, there are ways to identify this type of Cowrie deployment. For example, it's not possible to execute bash scripts as this is a limitation of low and medium interaction honeypots. It's also possible to identify the default installation as it will mirror a Debian 5 Installation and features a user account named Phil. The default file system also references an outdated CPU.﻿
-
-Answer the questions below
-Try running some commands in the honeypot
-No answer needed
-
 Create a file and then log back in is the file still there? (Yay/Nay)
 Nay
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Cowrie Event Logging
-
-The honeypot wouldn't be of much use without the ability to collect data on the attacks that it's subjected to. Fortunately, Cowrie uses an extensive logging system that tracks every connection and command handled by the system. You can access the real SSH port for this demo machine using the following options:
-
-IP - MACHINE_IP
-Port - 1400
-User - demo
-Password - demo
-
-Cowrie can log to a variety of different local formats and log parsing suites. In this case, the installation is just using the JSON and text logs. I've installed the JSON parser jq on the demo machine to simplify log parsing.
-
-Note: You may need to delete the demo machine's identity from .ssh/known_hosts as it will differ from the one used in the honeypot. You will also need to specify a port adding -p 1400 to the SSH command. The logs will also be found at /home/cowrie/honeypot/var/log/cowrie
-
-﻿Log Aggregation
-
-The amount of data collected by honeypots, especially external deployments can quickly exceed the point where it's no longer practical to parse manually. As a result, it's often worth deploying Honeypots alongside a logging platform like the ELK stack. Log aggregation platforms can also provide live monitoring capabilities and alerts. This is particularly beneficial when deploying Honeypots, with the intent to respond to attacks rather than to collect data.
-
-Answer the questions below
-
-Have a look through the logs and see how the activity from the last task has been recorded by the system.
-No answer needed
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-﻿SSH and Brute-Force Attacks
-
-By default, Cowrie will only expose SSH. This means adversaries will only be able to compromise the honeypot by attacking the SSH service. The attack surface presented by a typical SSH installation is limited so most attacks against the service will take the form of brute-force attacks. Defending against these attacks is relatively simple in most cases as they can be defeated by only allowing public-key authentication or by using strong passwords. These attacks should not be completely ignored, as there are simply so many of them that you are pretty much guaranteed to be attacked at some point.
-
-A collection of the 200 most common credentials used against old Cowrie deployments has been left on the demo machine and can be used to answer the questions below. As you can see, most of the passwords are extremely weak. Notable entries include the default credentials used for some devices like Raspberry PIs and the Volumio Jukebox. Various combinations of '1234' and rows of keys are also commonplace.
-
-Answer the questions below
 
 How many passwords include the word "password" or some other variation of it e.g "p@ssw0rd"
 15
@@ -75,8 +10,29 @@ hydra
 What intrusion prevention software framework is commonly used to mitigate SSH brute-force attacks?
 Fail2Ban
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What CPU does the honeypot "use"?
+Intel(R) Core(TM) i9-11900KB CPU @ 3.30GHz
 
+Does the honeypot return the correct values when uname -a is run? (Yay/Nay)
+Nay
 
+What flag must be set to pipe wget output into bash?
+-O
 
+How would you disable bash history using unset?
+unset HISTFILE
 
+What brand of device is the bot in the first sample searching for? (BotCommands/Sample1.txt)
+Mikrotik
+
+What are the commands in the second sample changing? (BotCommands/Sample2.txt)
+root password
+
+What is the name of the group that runs the botnet in the third sample? (BotCommands/Sample3.txt)
+Outlaw
+
+What application is being targetted in the first sample? (Tunnelling/Sample1.txt)
+WordPress
+
+Is the URL in the second sample malicious? (Tunnelling/Sample2.txt) (Yay/Nay)
+Nay
