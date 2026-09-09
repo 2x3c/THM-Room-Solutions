@@ -1,0 +1,24 @@
+Where is the affected data center located?
+
+London
+
+Correct Answer
+Whom does OpenDoor suspect of starting the attack?
+
+Ruby Evans
+
+Correct Answer
+Did OpenDoor manage to find any indicators of compromise?
+Answer Format: Indicator, Host
+
+hello.exe, DC-04
+
+Correct Answer
+What EDR is deployed across OpenDoor's network?
+
+BitDefender
+
+Correct Answer
+
+Task 4
+Organize DFIR Chat
