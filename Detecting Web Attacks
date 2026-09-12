@@ -1,0 +1,12 @@
+What class of attacks relies on exploiting the user's behavior or device?
+Client-Side
+
+What is the most common client-side attack?
+XSS
+
+What class of attacks relies on exploiting vulnerabilities within web servers?
+Server-Side
+
+Which server-side attack lets attackers abuse forms to dump database contents?
+SQLi
+
