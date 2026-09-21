@@ -1,0 +1,85 @@
+Enter a password with at least 12 characters.
+Include uppercase, lowercase, numbers, and symbols.
+Ensure it isn’t in the breach database.
+What's the flag?
+THM{StrongStart}
+
+Click the “Scan” Button.
+Review the scan report (49 clean results, 1 malicious).
+Decide correctly whether the file is safe or dangerous.
+What's the flag?
+THM{NotSoSweet}
+
+
+Use ls to list files.
+Use cd challenges/ to change directories.
+Use cat welcome.txt to read the text file.
+What's the flag?
+THM{Ready2Hack}
+
+
+Use dir to list visible files.
+Try dir /a to reveal hidden ones.
+Use type hidden_flag.txt to read the flag.
+What's the flag?
+THM{WhereIsMcSkidy}
+
+Use cd /home/mcskidy/ to enter his folder.
+Run ls -la to show all files.
+Use cat .secret_message to reveal the flag.
+What's the flag?
+THM{TrustNoBunny}
+
+Enter mcskidy@tbfc.com into the breach checker.
+Review results for each domain.
+Identify the one marked “Compromised.”
+What's the flag?
+THM{LeakedAndFound}
+
+Log in with username admin and password admin.
+Go to “Security Settings.”
+Set a new strong password that passes validation.
+
+Log in with username admin and password admin.
+Go to “Security Settings.”
+Set a new strong password that passes validation.
+What's the flag?
+THM{NoMoreDefault}
+
+Review the list of connected apps.
+Look for one with unusual permissions (like “password vault” access).
+Click “Revoke Access.”
+What's the flag?
+THM{AppTrapped}
+
+Read each line of the conversation.
+Select the ones containing private data.
+Submit your findings.
+What's the flag?
+THM{DontFeedTheBot}
+
+
+Read the provided web log entries.
+Compare them to common browsers (Chrome, Firefox, Edge).
+Identify and select the suspicious entry
+What's the flag?
+THM{EastmasIsComing}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
