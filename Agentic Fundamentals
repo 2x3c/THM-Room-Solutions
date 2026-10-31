@@ -1,0 +1,21 @@
+Which OWASP-defined agentic capability ensures that each moment is not treated as a blank slate, but informed by what has already happened?
+Memory & Statefulness
+
+Which OWASP-defined agentic capability works out the order in which things need to happen?
+Planning & Reasoning
+
+Which OWASP-defined agentic capability translates as something happening in the real world?
+Action & Tool Use
+
+What do agents use to perform actions in the real world?
+tools
+
+What is the name of the practice dedicated to meaningfully designing applications so agents can interact with them more efficiently?
+ACI
+
+How many times more tokens can a multi-agent system use than a single conversation?
+15
+
+What is the name of the agent that all sub-agents report back to?
+Orchestrator
+
