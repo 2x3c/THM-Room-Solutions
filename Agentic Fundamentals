@@ -19,3 +19,12 @@ How many times more tokens can a multi-agent system use than a single conversati
 What is the name of the agent that all sub-agents report back to?
 Orchestrator
 
+What is the name of the shared standard for connecting an AI agent to the tools and data it needs?
+MCP
+
+What are the three roles MCP defines? (Format: Comma-separated list, in the order they are defined in the task)
+Host,Client,Server
+
+What is the name of the term which defines when agents engage an external agent?
+A2A
+
