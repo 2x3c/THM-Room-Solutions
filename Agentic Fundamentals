@@ -28,3 +28,20 @@ Host,Client,Server
 What is the name of the term which defines when agents engage an external agent?
 A2A
 
+OWASP has expanded on the concepts of Least-Privilege and Excessive Agency to define what term?
+Least Agency
+
+Which control ensures that an agent holds onto permissions for the exact window it needs them, rather than indefinitely?
+Time-boxed access
+
+Which agent did the orchestrator delegate to, and what is its Inspector identity label?
+logistics-specialist
+
+What tool did the specialist call to retrieve the shipment record?
+query_shipment_manifest
+
+Which shipment is awaiting clearance?
+OX-1102
+
+What is the cargo of the critical handling shipment?
+Medical Equipment
