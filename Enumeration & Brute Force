@@ -1,0 +1,19 @@
+What type of error messages can unintentionally provide attackers with confirmation of valid usernames?
+Verbose errors
+
+Enumerating Users via
+What is the valid email address from the list?
+canderson@gmail.com
+
+Exploiting Vulnerable Password
+What is the flag?
+THM{50_pr3d1ct4BL333!!}
+
+
+Exploiting HTTP Basic Authentication
+What is the flag?
+THM{b4$$1C_AuTTHHH}
+
+
+Try using Hydra instead of Burp to brute force the password.
+No answer needed
