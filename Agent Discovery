@@ -1,0 +1,33 @@
+Which approach uses fixed code and rules without an LLM?
+Traditional workflow
+
+Which approach uses an LLM inside a code-controlled sequence?
+AI workflow
+
+Which approach responds to engineer-led questions and requests?
+AI assistant
+
+Which approach dynamically chooses the next approved step?
+AI agent
+
+A system extracts IP addresses, sorts timestamps, and follows fixed rules. Which approach fits best?
+Traditional workflow
+
+The engineer asks for an incident comparison but personally chooses the next step. Which system type is this?
+AI assistant
+
+The first investigation tool returns weak evidence, so the model selects another approved tool. Which system type is this?
+AI agent
+
+Approximately how many security alerts does NorthStar’s engineer review each day? (Number or word)
+50
+
+An alert contains an external source IP address. Which investigation step should the engineer consider?
+Check IP reputation
+
+An unusual-location login is followed ten minutes later by an external mail-forwarding rule for the same user. What should the engineer search for?
+Related alerts
+
+THM{NoRtHSt4r_Ag3nt}
+
+
