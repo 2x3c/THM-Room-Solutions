@@ -1,0 +1,34 @@
+The #1 attack vector for cyber attackers to gain access to the OT network is from which network?
+IT
+
+Which popular example of a "transitory cyber asset" is known by its three-letter acronym?
+USB
+
+Shodan, Censys, and ZoomEye can all be used to find OT assets that are directly exposed to the _ _ _ _ _ _ _ _.
+Internet
+
+OT Cyber Security Incidents - Part 1: Stuxnet (2010) and TRISIS (20
+What was the name of the first known piece of OT/ICS malware?
+Stuxnet
+
+Which type of physical equipment was destroyed by the OT/ICS malware?
+Centrifuges
+
+The TRISIS/Triton attack involved state adversaries injecting malicious code into what type of system in a petrochemical facility?
+Safety Instrumented System
+
+OT Cyber Security Incidents - Part 2: Colonial Pipeline (2021), Ukr
+What type of cyber attackers were responsible for the Colonial Pipeline incident, which took down the largest gasoline pipeline in the United States for nearly a week?
+ransomware operators
+
+Instead of OT/ICS-specific malware, the 2022 Ukrainian blackout was caused by the technique known as Living off the ________?
+Land
+
+Which register is associated with the boiler pressure?
+8
+
+If you wanted to disable heating just for the second floor, which coil would you overwrite to 0?
+3
+
+Which I/O (Input/Output) channel is associated with the outside temperature?
+8
